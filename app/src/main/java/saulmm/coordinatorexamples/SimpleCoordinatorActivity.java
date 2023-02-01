@@ -30,8 +30,17 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.google.android.material.appbar.AppBarLayout;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import saulmm.coordinatorexamples.staggeredrecycler.PostItem;
+import saulmm.coordinatorexamples.staggeredrecycler.PostsAdapter;
+import saulmm.coordinatorexamples.staggeredrecycler.ViewType;
 
 public class SimpleCoordinatorActivity extends AppCompatActivity implements AppBarLayout.OnOffsetChangedListener {
 
@@ -54,6 +63,8 @@ public class SimpleCoordinatorActivity extends AppCompatActivity implements AppB
 
         appbarLayout.addOnOffsetChangedListener(this);
         appbarLayout.setExpanded(true);
+
+        setUpRecycler();
     }
 
     public static void start(Context c) {
@@ -64,7 +75,7 @@ public class SimpleCoordinatorActivity extends AppCompatActivity implements AppB
     public void onOffsetChanged(AppBarLayout appBarLayout, int i) {
         double offsetAlpha = -(appbarLayout.getY() / appbarLayout.getTotalScrollRange());
         /**Here 0.7 signifies the 7 percent of the screen from where animation will start on offset scroll*/
-        if (offsetAlpha > 0.2) {
+        if (offsetAlpha > 0.7) {
 //            cardCoupon.setVisibility(View.INVISIBLE);
             llTabs.setVisibility(View.INVISIBLE);
             tvSearchBar.setVisibility(View.INVISIBLE);
@@ -85,14 +96,14 @@ public class SimpleCoordinatorActivity extends AppCompatActivity implements AppB
 //            new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
 //                @Override
 //                public void run() {
-                    toolbarCollapsed.setVisibility(View.INVISIBLE);
-                    toolbarCollapsed.setClickable(false);
-                    toolbarCollapsed.setFocusable(false);
-                    toolbar.setVisibility(View.VISIBLE);
+            toolbarCollapsed.setVisibility(View.INVISIBLE);
+            toolbarCollapsed.setClickable(false);
+            toolbarCollapsed.setFocusable(false);
+            toolbar.setVisibility(View.VISIBLE);
 
 //                    cardCoupon.setVisibility(View.VISIBLE);
-                    llTabs.setVisibility(View.VISIBLE);
-                    tvSearchBar.setVisibility(View.VISIBLE);
+            llTabs.setVisibility(View.VISIBLE);
+            tvSearchBar.setVisibility(View.VISIBLE);
 
 //                }
 //            }, 50);
@@ -106,13 +117,56 @@ public class SimpleCoordinatorActivity extends AppCompatActivity implements AppB
 //            new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
 //                @Override
 //                public void run() {
-                    toolbarCollapsed.setVisibility(View.VISIBLE);
-                    toolbar.setVisibility(View.INVISIBLE);
-                    toolbarCollapsed.setClickable(true);
-                    toolbarCollapsed.setFocusable(true);
+            toolbarCollapsed.setVisibility(View.VISIBLE);
+            toolbar.setVisibility(View.INVISIBLE);
+            toolbarCollapsed.setClickable(true);
+            toolbarCollapsed.setFocusable(true);
 //                }
 //            }, 50);
         }
 
+    }
+
+
+    private void setUpRecycler() {
+        RecyclerView postsRecyclerView = findViewById(R.id.postsRecyclerView);
+        StaggeredGridLayoutManager glm = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        glm.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
+        postsRecyclerView.setLayoutManager(glm);
+
+        List<PostItem> postItems = new ArrayList<>();
+
+        postItems.add(new PostItem(R.drawable.leeminho, ViewType.BIG.getId())); // 0
+        postItems.add(new PostItem(R.drawable.leejongsuk, ViewType.SMALL.getId())); // 1
+        postItems.add(new PostItem(R.drawable.chaeunwoo, ViewType.BIG.getId())); //2
+        postItems.add(new PostItem(R.drawable.seokangjoon, ViewType.BIG.getId())); //3
+        postItems.add(new PostItem(R.drawable.kimsoohyun, ViewType.EMPTY.getId()));//4
+        postItems.add(new PostItem(R.drawable.parkseojoon, ViewType.SMALL.getId()));// 5
+
+
+        postItems.add(new PostItem(R.drawable.parkseojoon, ViewType.SMALL.getId())); // 0
+        postItems.add(new PostItem(R.drawable.seoinguk, ViewType.BIG.getId())); // 1
+        postItems.add(new PostItem(R.drawable.jichangwook, ViewType.BIG.getId())); //2
+        postItems.add(new PostItem(R.drawable.yooseungho, ViewType.BIG.getId())); //3
+        postItems.add(new PostItem(R.drawable.kimsoohyun, ViewType.SMALL.getId()));//4
+        postItems.add(new PostItem(R.drawable.leeseunggi, ViewType.EMPTY.getId()));// 5
+
+        postItems.add(new PostItem(R.drawable.leeminho, ViewType.BIG.getId())); // 0
+        postItems.add(new PostItem(R.drawable.leejongsuk, ViewType.SMALL.getId())); // 1
+        postItems.add(new PostItem(R.drawable.chaeunwoo, ViewType.BIG.getId())); //2
+        postItems.add(new PostItem(R.drawable.seokangjoon, ViewType.BIG.getId())); //3
+        postItems.add(new PostItem(R.drawable.kimsoohyun, ViewType.EMPTY.getId()));//4
+        postItems.add(new PostItem(R.drawable.parkseojoon, ViewType.SMALL.getId()));// 5
+
+
+        postItems.add(new PostItem(R.drawable.parkseojoon, ViewType.SMALL.getId())); // 0
+        postItems.add(new PostItem(R.drawable.seoinguk, ViewType.BIG.getId())); // 1
+        postItems.add(new PostItem(R.drawable.jichangwook, ViewType.BIG.getId())); //2
+        postItems.add(new PostItem(R.drawable.yooseungho, ViewType.BIG.getId())); //3
+        postItems.add(new PostItem(R.drawable.kimsoohyun, ViewType.SMALL.getId()));//4
+        postItems.add(new PostItem(R.drawable.leeseunggi, ViewType.EMPTY.getId()));// 5
+
+
+        postsRecyclerView.setAdapter(new PostsAdapter(this, postItems));
     }
 }
