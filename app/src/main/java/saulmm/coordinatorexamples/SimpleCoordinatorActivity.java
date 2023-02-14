@@ -21,6 +21,7 @@ import android.media.Image;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -79,6 +80,7 @@ public class SimpleCoordinatorActivity extends AppCompatActivity implements AppB
     @Override
     public void onOffsetChanged(AppBarLayout appBarLayout, int i) {
         double offsetAlpha = -(appbarLayout.getY() / appbarLayout.getTotalScrollRange());
+        Log.d("TEST_2", "onOffsetChanged totalScrollRange :" + appBarLayout.getTotalScrollRange() + " offsetAlpha : " + offsetAlpha);
         /**Here 0.7 signifies the 7 percent of the screen from where animation will start on offset scroll*/
         if (offsetAlpha > 0.7) {
 //            cardCoupon.setVisibility(View.INVISIBLE);
