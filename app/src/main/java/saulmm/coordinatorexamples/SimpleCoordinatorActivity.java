@@ -30,14 +30,18 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
+import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.appbar.AppBarLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import saulmm.coordinatorexamples.staggeredrecycler.BenefitsDataAdapter;
 import saulmm.coordinatorexamples.staggeredrecycler.PostItem;
 import saulmm.coordinatorexamples.staggeredrecycler.PostsAdapter;
 import saulmm.coordinatorexamples.staggeredrecycler.ViewType;
@@ -46,9 +50,9 @@ public class SimpleCoordinatorActivity extends AppCompatActivity implements AppB
 
     private AppBarLayout appbarLayout;
     private Toolbar toolbar, toolbarCollapsed;
-    private ImageView cardCoupon;
-    private TextView tvSearchBar;
-    private LinearLayout llTabs;
+    private ConstraintLayout cardCoupon;
+    private LinearLayout tvSearchBar;
+    private com.google.android.material.tabs.TabLayout llTabs;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -58,13 +62,14 @@ public class SimpleCoordinatorActivity extends AppCompatActivity implements AppB
         toolbar = findViewById(R.id.toolbar);
         toolbarCollapsed = findViewById(R.id.toolbar_collapsed);
         cardCoupon = findViewById(R.id.card_coupon);
-        tvSearchBar = findViewById(R.id.tvSearchBar);
-        llTabs = findViewById(R.id.llTabs);
+        tvSearchBar = findViewById(R.id.ll_searchbar);
+        llTabs = findViewById(R.id.tl_categories);
 
         appbarLayout.addOnOffsetChangedListener(this);
         appbarLayout.setExpanded(true);
 
-        setUpRecycler();
+        setPager();
+
     }
 
     public static void start(Context c) {
@@ -128,45 +133,15 @@ public class SimpleCoordinatorActivity extends AppCompatActivity implements AppB
     }
 
 
-    private void setUpRecycler() {
-        RecyclerView postsRecyclerView = findViewById(R.id.postsRecyclerView);
-        StaggeredGridLayoutManager glm = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
-        glm.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
-        postsRecyclerView.setLayoutManager(glm);
+    private void setPager() {
+        BenefitsDataAdapter benefitsDataAdapter = new BenefitsDataAdapter(this);
+        ViewPager2 benefitsVp = findViewById(R.id.benefits_vp);
+        benefitsVp.setAdapter(benefitsDataAdapter);
 
-        List<PostItem> postItems = new ArrayList<>();
-
-        postItems.add(new PostItem(R.drawable.leeminho, ViewType.BIG.getId())); // 0
-        postItems.add(new PostItem(R.drawable.leejongsuk, ViewType.SMALL.getId())); // 1
-        postItems.add(new PostItem(R.drawable.chaeunwoo, ViewType.BIG.getId())); //2
-        postItems.add(new PostItem(R.drawable.seokangjoon, ViewType.BIG.getId())); //3
-        postItems.add(new PostItem(R.drawable.kimsoohyun, ViewType.EMPTY.getId()));//4
-        postItems.add(new PostItem(R.drawable.parkseojoon, ViewType.SMALL.getId()));// 5
-
-
-        postItems.add(new PostItem(R.drawable.parkseojoon, ViewType.SMALL.getId())); // 0
-        postItems.add(new PostItem(R.drawable.seoinguk, ViewType.BIG.getId())); // 1
-        postItems.add(new PostItem(R.drawable.jichangwook, ViewType.BIG.getId())); //2
-        postItems.add(new PostItem(R.drawable.yooseungho, ViewType.BIG.getId())); //3
-        postItems.add(new PostItem(R.drawable.kimsoohyun, ViewType.SMALL.getId()));//4
-        postItems.add(new PostItem(R.drawable.leeseunggi, ViewType.EMPTY.getId()));// 5
-
-        postItems.add(new PostItem(R.drawable.leeminho, ViewType.BIG.getId())); // 0
-        postItems.add(new PostItem(R.drawable.leejongsuk, ViewType.SMALL.getId())); // 1
-        postItems.add(new PostItem(R.drawable.chaeunwoo, ViewType.BIG.getId())); //2
-        postItems.add(new PostItem(R.drawable.seokangjoon, ViewType.BIG.getId())); //3
-        postItems.add(new PostItem(R.drawable.kimsoohyun, ViewType.EMPTY.getId()));//4
-        postItems.add(new PostItem(R.drawable.parkseojoon, ViewType.SMALL.getId()));// 5
-
-
-        postItems.add(new PostItem(R.drawable.parkseojoon, ViewType.SMALL.getId())); // 0
-        postItems.add(new PostItem(R.drawable.seoinguk, ViewType.BIG.getId())); // 1
-        postItems.add(new PostItem(R.drawable.jichangwook, ViewType.BIG.getId())); //2
-        postItems.add(new PostItem(R.drawable.yooseungho, ViewType.BIG.getId())); //3
-        postItems.add(new PostItem(R.drawable.kimsoohyun, ViewType.SMALL.getId()));//4
-        postItems.add(new PostItem(R.drawable.leeseunggi, ViewType.EMPTY.getId()));// 5
-
-
-        postsRecyclerView.setAdapter(new PostsAdapter(this, postItems));
+        new TabLayoutMediator(llTabs, benefitsVp, (tab, position) -> {
+            tab.setText(benefitsDataAdapter.getItemTitle(position));
+            //tab.setCustomView(react_with_any_emoji_tab)
+            //      .setIcon(ThemeUtil.getThemedDrawable(requireContext(), viewModel.getCategoryIconAttr(position)));
+        }).attach();
     }
 }
