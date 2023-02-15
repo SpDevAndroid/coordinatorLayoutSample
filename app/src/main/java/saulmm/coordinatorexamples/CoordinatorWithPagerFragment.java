@@ -19,12 +19,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.appbar.AppBarLayout;
@@ -32,34 +36,41 @@ import com.google.android.material.tabs.TabLayoutMediator;
 
 import saulmm.coordinatorexamples.staggeredrecycler.BenefitsDataAdapter;
 
-public class SimpleCoordinatorActivity extends AppCompatActivity implements AppBarLayout.OnOffsetChangedListener {
+public class CoordinatorWithPagerFragment extends Fragment implements AppBarLayout.OnOffsetChangedListener {
 
     private AppBarLayout appbarLayout;
     private Toolbar toolbar, toolbarCollapsed;
     private ConstraintLayout cardCoupon;
     private LinearLayout tvSearchBar;
     private com.google.android.material.tabs.TabLayout llTabs;
+    private ViewPager2 benefitsVp;
+
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_coordinator_with_pager, container, false);
+        appbarLayout = view.findViewById(R.id.appbar);
+        toolbar = view.findViewById(R.id.toolbar);
+        toolbarCollapsed = view.findViewById(R.id.toolbar_collapsed);
+        cardCoupon = view.findViewById(R.id.card_coupon);
+        tvSearchBar = view.findViewById(R.id.ll_searchbar);
+        llTabs = view.findViewById(R.id.tl_categories);
+        benefitsVp = view.findViewById(R.id.benefits_vp);
+        return view;
+    }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_simple_coordinator);
-        appbarLayout = findViewById(R.id.appbar);
-        toolbar = findViewById(R.id.toolbar);
-        toolbarCollapsed = findViewById(R.id.toolbar_collapsed);
-        cardCoupon = findViewById(R.id.card_coupon);
-        tvSearchBar = findViewById(R.id.ll_searchbar);
-        llTabs = findViewById(R.id.tl_categories);
-
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         appbarLayout.addOnOffsetChangedListener(this);
         appbarLayout.setExpanded(true);
 
         setPager();
-
     }
 
     public static void start(Context c) {
-        c.startActivity(new Intent(c, SimpleCoordinatorActivity.class));
+        c.startActivity(new Intent(c, CoordinatorWithPagerFragment.class));
     }
 
     @Override
@@ -121,8 +132,7 @@ public class SimpleCoordinatorActivity extends AppCompatActivity implements AppB
 
 
     private void setPager() {
-        BenefitsDataAdapter benefitsDataAdapter = new BenefitsDataAdapter(this);
-        ViewPager2 benefitsVp = findViewById(R.id.benefits_vp);
+        BenefitsDataAdapter benefitsDataAdapter = new BenefitsDataAdapter(requireActivity());
         benefitsVp.setAdapter(benefitsDataAdapter);
 
         new TabLayoutMediator(llTabs, benefitsVp, (tab, position) -> {

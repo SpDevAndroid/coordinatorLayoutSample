@@ -1,21 +1,21 @@
 <resources>
-	<string name="app_name">Coordinator Examples</string>
+    <string name="app_name">Coordinator Examples</string>
 
-	<string name="example_title">This is an awesome title</string>
-	<string name="example_subtitle">I\'m a cool subtitle, larger than the title</string>
+    <string name="example_title">This is an awesome title</string>
+    <string name="example_subtitle">I\'m a cool subtitle, larger than the title</string>
 
-	<string name="text_header">Text</string>
-	<string name="flexible_title">Flexible space</string>
+    <string name="text_header">Text</string>
+    <string name="flexible_title">Flexible space</string>
 
-	<string name="header_about">About</string>
-	<string name="header_examples">Examples</string>
+    <string name="header_about">About</string>
+    <string name="header_examples">Examples</string>
 
-	<string name="item_flexible_space_example">Flexible space example</string>
-	<string name="item_simple_coordinator_example">Simple coordinator example</string>
-	<string name="item_googleio_example">Google IO Detail example</string>
-	<string name="item_materialup_example">Material up profile example</string>
+    <string name="item_flexible_space_example">Flexible space example</string>
+    <string name="item_simple_coordinator_example">Simple coordinator example</string>
+    <string name="item_googleio_example">Google IO Detail example</string>
+    <string name="item_materialup_example">Material up profile example</string>
 
-	<string name="lorem">
+    <string name="lorem">
 		Lorem ipsum dolor sit amet, consectetur adipiscing elit.
 		In mollis est vitae erat laoreet consectetur. Mauris dui mauris,
 		dictum vel egestas vel, porta sed ante. Phasellus congue viverra ipsum,
@@ -55,7 +55,7 @@
 		aliquet quis orci. Curabitur maximus augue ut bibendum sagittis.
 	</string>
 
-	<string name="about">
+    <string name="about">
 		This example shows different CoordinatorLayout usage examples, like the use of \'anchor\' in views,
 		flexible space and some more tips.\n\n
 
@@ -64,10 +64,10 @@
 
 		\n\n Enjoy
 	</string>
-	<string name="swype.help">The \'Swipe to dismiss\' behavior allows you to easily add the \'Swipe to dismiss\' functionality in a View inside a CoordinatorLayout</string>
-	<string name="title_mup_name">Saúl Molinero</string>
-	<string name="subtitle_mup">Here I am with a subtitle</string>
+    <string name="swype.help">The \'Swipe to dismiss\' behavior allows you to easily add the \'Swipe to dismiss\' functionality in a View inside a CoordinatorLayout</string>
+    <string name="title_mup_name">Saúl Molinero</string>
+    <string name="subtitle_mup">Here I am with a subtitle</string>
     <string name="hello_good_morning">Hello good Morning 😊</string>
     <string name="search_for_restaurant_vouchers_events">Search for Restaurant, vouchers, events</string>
-	<string name="all">All</string>
+    <string name="all">All</string>
 </resources>
